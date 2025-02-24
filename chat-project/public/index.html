@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+      <title>Socket.IO chat</title>
+      <link rel="stylesheet" href="style.css">
+   </head>
+   <body>
+      <ul id="messages">
+         <li class="self">Hello, this is a message from me!</li>
+         <li class="other">Hi, this is a message from someone else.</li>
+         <li class="self">How are you?</li>
+         <li class="other">I'm good, thanks! How about you?</li>
+      </ul>
+      <form id="form">
+         <input id="input" autocomplete="off" placeholder="Type a message..." />
+         <button>Send</button>
+      </form>
+
+      <script src="/socket.io/socket.io.js"></script>
+      <script defer src="./app.js"></script>
+   </body>
+</html>
