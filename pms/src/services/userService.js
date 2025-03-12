@@ -7,16 +7,15 @@ export const creatUser = async (userData) => {
     try {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-
         const user = new User({
             userName,
-            hashedPassword,
+            password: hashedPassword,
             email
         });
         await user.save();
         return user.toObject()
     } catch (error) {
-        return error.message
+        throw new Error(error.message);
     }
 }
 
