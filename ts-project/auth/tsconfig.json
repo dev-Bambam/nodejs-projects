@@ -3,11 +3,11 @@
       "target": "es6", // Compile to modern JS (ES6)
       "module": "commonjs", // Node.js module system
       "outDir": "./dist", // Output compiled .js here
-      "rootDir": "./src", // Look for .ts files here
+      "rootDir": ".", // Look for .ts files here
       "strict": true, // Enforce strict type checking
       "esModuleInterop": true, // Smooth imports between TS/JS modules
       "skipLibCheck": true // Skip type-checking third-party libs
    },
-   "include": ["src/**/*"], // Compile all .ts files in src
-   "exclude": ["node_modules"] // Ignore node_modules
+   "include": ["index.ts", "src/**/*"], // Compile all .ts files in src
+   "exclude": ["node_modules", "dist"] // Ignore node_modules
 }
