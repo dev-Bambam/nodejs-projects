@@ -9,10 +9,11 @@ export interface User extends Document{
     passwordResetCode: string | undefined,
     passwordResetValidation: number | undefined,
     emailVerificationCode: string | undefined,
-    emailVerificationValidation: number | undefined,
+    emailCodeValidation: number | undefined,
     verified: boolean,
     refreshToken: string | undefined
 }
+
 const userSchema = new Schema<User>(
    {
       firstName: {
@@ -49,7 +50,7 @@ const userSchema = new Schema<User>(
          type: String,
          select: false,
       },
-      emailVerificationValidation: {
+      emailCodeValidation: {
          type: Number,
          select: false,
       },
