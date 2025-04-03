@@ -63,16 +63,5 @@ const adminSchema = new Schema<Admin>(
    { timestamps: true }
 );
 
-// revokedToken schema in order to implement refresh token rotation
-const revokedTokenSchema = new Schema({
-   token: { type: String, required: true }, // Hashed refresh token
-   studentId: { type: Schema.Types.ObjectId, ref: "Student", required: true },
-   expiresAt: { type: Date, required: true }, // For cleanup
-});
-// indexing
-revokedTokenSchema.index({ token: 1, studentId: 1 })
-revokedTokenSchema.index(
-   { expiresAt: 1 },
-   {expireAfterSeconds: 0}
-) //for automatic refreshToken deletion after it expires
 
+export const Admin = model<Admin>('Admin', adminSchema)
