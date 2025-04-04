@@ -1,6 +1,6 @@
 import { Schema, model, Document } from "mongoose";
 
-export interface Admin extends Document {
+export interface AdminDocument extends Document {
    firstName: string;
    lastName: string;
    email: string;
@@ -13,7 +13,7 @@ export interface Admin extends Document {
    refreshToken: string | undefined;
 }
 
-const adminSchema = new Schema<Admin>(
+const adminSchema = new Schema<AdminDocument>(
    {
       firstName: {
          type: String,
@@ -29,10 +29,13 @@ const adminSchema = new Schema<Admin>(
          type: String,
          trim: true,
          required: true,
+         unique: true
       },
       password: {
          type: String,
          required: true,
+         select: false,
+         trim: true
       },
       verified: {
          type: Boolean,
@@ -42,6 +45,7 @@ const adminSchema = new Schema<Admin>(
       passwordResetCode: {
          type: String,
          select: false,
+         default: null
       },
       passwordResetValidation: {
          type: Number,
@@ -54,14 +58,15 @@ const adminSchema = new Schema<Admin>(
       emailCodeValidation: {
          type: Number,
          select: false,
-        },
-        refreshToken: {
-            type: String,
-            select: false
-      }
+      },
+      refreshToken: {
+         type: String,
+         select: false,
+      },
    },
    { timestamps: true }
 );
 
+const Admin = model<AdminDocument>("Admin", adminSchema);
 
-export const Admin = model<Admin>('Admin', adminSchema)
+export default Admin

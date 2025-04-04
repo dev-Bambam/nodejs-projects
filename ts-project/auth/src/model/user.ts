@@ -1,7 +1,7 @@
 import { Schema, model, Document } from "mongoose";
 
 // create interface 
-export interface User extends Document{
+export interface UserDocument extends Document{
     firstName: string,
     lastName: string,
     email: string,
@@ -14,7 +14,7 @@ export interface User extends Document{
     refreshToken: string | undefined
 }
 
-const userSchema = new Schema<User>(
+const userSchema = new Schema<UserDocument>(
    {
       firstName: {
          type: String,
@@ -67,4 +67,6 @@ const userSchema = new Schema<User>(
    { timestamps: true }
 );
 
-export const User = model("User", userSchema);
+const User = model<UserDocument>("User", userSchema);
+
+export default User;
