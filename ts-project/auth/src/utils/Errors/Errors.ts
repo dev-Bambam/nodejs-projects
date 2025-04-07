@@ -1,4 +1,6 @@
-class ValidationError extends CustomError{
+import CustomError from "./CustomError";
+
+export class ValidationError extends CustomError{
     public details: string[];
     
     constructor(message: string, details: string[] = []) {
@@ -6,4 +8,8 @@ class ValidationError extends CustomError{
         this.details = details;
         this.message = 'Validation Error'
     }
+}
+
+export class NotFoundError extends CustomError{
+    
 }

@@ -1,4 +1,4 @@
-class CustomError extends Error{
+ class CustomError extends Error{
     public statusCode: number;
     public isOperational: boolean;
 
@@ -9,4 +9,6 @@ class CustomError extends Error{
 
         Error.captureStackTrace(this, this.constructor)
     }
-}
+ }
+
+ export default CustomError
