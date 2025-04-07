@@ -1,0 +1,11 @@
+[2025-04-07 12:07:25] ERROR: error: ValidationError: type is required
+[2025-04-07 12:12:08] ERROR: error: ValidationError: type is required, user's email: ayogood18@gmail.com
+[2025-04-07 12:12:58] ERROR: error: Error: invalid user type, user's email: ayogood18@gmail.com
+[2025-04-07 12:16:42] ERROR: error: Error: invalid user type, user's email: ayogood18@gmail.com
+[2025-04-07 12:20:31] ERROR: error: Error: invalid user type, user's email: ayogood18@gmail.com
+[2025-04-07 12:23:37] ERROR: error: Error: invalid user type, user's email: ayogood18@gmail.com
+[2025-04-07 12:32:36] ERROR: error: Error: type must be admin or user, user's email: ayogood18@gmail.com
+[2025-04-07 12:39:06] ERROR: error: Error: type must be admin or user, user's email: ayogood18@gmail.com
+[2025-04-07 12:42:48] ERROR: error: ValidationError: type is required, user's email: ayogood18@gmail.com
+[2025-04-07 12:59:08] ERROR: error: ValidationError: type is required, user's email: ayogood18@gmail.com
+[2025-04-07 12:59:22] ERROR: error: ValidationError: type must be either user or admin, user's email: ayogood18@gmail.com

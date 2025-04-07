@@ -9,7 +9,8 @@ export const doCompare = async (data: string, hashedData: string) => {
     return await compare(data, hashedData)
 }
 
-export const doHmac = (data: string, key: string) => {
+export const doHmac = (data: string, key: string | undefined) => {
     if (!data || !key) throw new Error('please provide data or key value')
     return createHmac('sha256', key).update(data).digest('hex')
 }
+
