@@ -36,3 +36,21 @@ export const signUpVal = Joi.object({
       "any.only": "type must be either user or admin",
    }),
 });
+
+export const testVal = Joi.object({
+   content: Joi.string().min(2).max(60).required().messages({
+      "string.base": "content must be a string",
+      "string.empty": "content can not be empty",
+      "string.min": "content must be atleast 2 characters long",
+      "string.max": "content must be 60 characters long",
+      "any.required": "content is required",
+   }),
+   title: Joi.string().min(2).max(60).required().messages({
+      "string.base": "title must be a string",
+      "string.empty": "title can not be empty",
+      "string.min": "title must be atleast 2 characters long",
+      "string.max": "title must be 60 characters long",
+      "any.required": "title is required",
+   }),
+   
+});
