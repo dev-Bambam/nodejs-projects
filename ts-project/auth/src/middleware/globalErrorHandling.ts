@@ -3,14 +3,16 @@ import { Request, Response, NextFunction } from "express";
 import logger from "../utils/logger";
 
 const globalErrorHandler = (err: BaseError, req: Request, res: Response, next: NextFunction) => {
-    const statusCode = err.statusCode || 500;
-    const status = err.status || 'fail'
-   const message = err.message || "Something is wrong";
+    // initialize all BaseError Properties
+   const statusCode = err.statusCode || 500;
+   const status = err.status || "fail";
    const type = err.type || "UNKOWN_ERR";
-   let extraFileds = {};
+   const message = err.message || "Something is wrong";
+   let errorDetails = {};
 
+    // check for specific error like ValidationError to populate error details fields
    if (err instanceof ValidationError) {
-      extraFileds = { details: err.details };
+      errorDetails = { details: err.details };
    }
 
    // Logging
@@ -20,11 +22,12 @@ const globalErrorHandler = (err: BaseError, req: Request, res: Response, next: N
       logger.error(`Operational Error: ${message}`); // Minimal log for expected issues
    }
 
+    // send response
    res.status(statusCode).json({
       status,
-      message,
       type,
-      ...extraFileds,
+      message,
+      ...errorDetails,
    });
 };
 

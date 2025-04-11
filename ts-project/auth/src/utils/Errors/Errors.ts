@@ -1,9 +1,11 @@
 export class BaseError extends Error {
+   // decalre properties
    public statusCode: number;
    public status: string;
    public isOperational: boolean;
    public type: string;
 
+   // set up constructor
    constructor(message: string, statusCode: number, type:string, isOperational = true) {
       super(message);
       this.statusCode = statusCode;
@@ -16,8 +18,8 @@ export class BaseError extends Error {
 
 export class ValidationError extends BaseError {
    public details: string[];
-   constructor(message: string, details:string[]) {
-      super(message, 400,'VALIDATION_ERR', true); // 400 Bad Request
+   constructor(details:string[]) {
+      super('Validation Failed', 400,'VALIDATION_ERR', true); // 400 Bad Request
       this.details = details
    }
 }
