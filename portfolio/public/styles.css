@@ -1,0 +1,166 @@
+/* styles.css */
+/* General Styles */
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #020c1b; /* Very dark navy */
+  color: #a8b2d1; /* Light gray */
+  line-height: 1.6;
+}
+
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+h1, h2, h3 {
+  color: #64ffda; /* Bright green */
+  font-family: 'Fira Code', monospace;
+}
+
+a {
+  color: #64ffda; /* Bright green */
+  text-decoration: none;
+  background-color: #0a192f; /* Dark navy */
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/* Header */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 0;
+  background-color: #0a192f; /* Dark navy */
+}
+
+.header-content {
+  max-width: 600px;
+}
+
+header h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+header .subtitle {
+  font-size: 1.5rem;
+  color: #8892b0; /* Light blue */
+}
+
+header .intro {
+  font-size: 1.2rem;
+  color: #8892b0; /* Light blue */
+}
+
+.header-image img {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(100, 255, 218, 0.2); /* Green shadow */
+}
+
+/* Projects */
+#projects {
+  background-color: #020c1b; /* Very dark navy */
+  padding: 50px 0;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.project-card {
+  background-color: #112240; /* Darker navy */
+  padding: 20px;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  border: 1px solid #1f2a48; /* Dark border */
+}
+
+.project-card:hover {
+  transform: scale(1.06);
+}
+
+.project-card h3 {
+  margin-top: 0;
+  color: #64ffda; /* Bright green */
+}
+
+.project-card p {
+  color: #8892b0; /* Light blue */
+}
+
+/* Skills */
+#skills {
+  background-color: #0a192f; /* Dark navy */
+  padding: 50px 0;
+}
+
+.skills-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skills-list li {
+  background-color: #112240; /* Darker navy */
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: #64ffda; /* Bright green */
+  border: 1px solid #1f2a48; /* Dark border */
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.skills-list li:hover {
+    transform: scale(1.06);
+  background-color: #1f2a48; /* Dark border color */
+}
+
+/* About Me */
+#about {
+  background-color: #020c1b; /* Very dark navy */
+  padding: 50px 0;
+}
+.abt-text{
+    font-size: 24px;
+}
+
+/* Contact */
+#contact {
+  background-color: #0a192f; /* Dark navy */
+  padding: 50px 0;
+}
+
+.contact-links {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.contact-links li a {
+  color: #64ffda; /* Bright green */
+  font-weight: bold;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px 0;
+  background-color: #020c1b; /* Very dark navy */
+  color: #8892b0; /* Light blue */
+  border-top: 1px solid #1f2a48; /* Dark border */
+}
