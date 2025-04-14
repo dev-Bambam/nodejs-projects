@@ -8,6 +8,8 @@ import {
    compareAndSave,
    getAccessToken,
    getRefreshToken,
+   getUSerByRefreshToken,
+   verifyUser
 } from "../service/authService";
 import {
    NotFoundError,
@@ -15,6 +17,7 @@ import {
    UserVerifiedError,
    UserNotVerifiedError,
    PasswordError,
+   InvalidCodeError,
 } from "../utils/Errors/Errors";
 import sendEmail from "../utils/sendEmail";
 import logger from "../utils/logger";
@@ -87,7 +90,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
    if (!doCompare(password, user.password)) throw new PasswordError();
 
    const accessToken = getAccessToken(user._id, type);
-   const refreshToken = getRefreshToken(user._id);
+   const refreshToken = getRefreshToken(user._id, type);
 
    res.cookie("accessToken", accessToken, {
       maxAge: ACCESS_TOKEN_EXP,
@@ -107,3 +110,49 @@ export const login = async (req: Request, res: Response): Promise<void> => {
    });
 };
 
+export const forgotPassword = async (req: Request, res: Response): Promise<void> => {
+   const { email, type } = req.body;
+   
+   const user = await getUserByEmail(email, type);
+   if (!user.verified) throw new UserNotVerifiedError();
+
+   const code = getVerificationCode();
+   await sendEmail(email, "Password Reset", code)
+   await hashAndSaveCode(user, code);
+
+   res.status(200).json({
+      status: "success",
+      message: "check your email to get password reset code"
+   })
+};
+
+export const resetPassword = async (req: Request, res: Response): Promise<void> => {
+   const { email, type, code, password } = req.body;
+
+   const user = await getUserByEmail(email, type);
+   if (!user.verified) throw new UserNotVerifiedError();
+
+   await compareAndSave(user, code, password);
+
+   res.status(200).json({
+      status: 'success',
+      message: 'password reset successfully'
+   })
+}
+
+export const logOut = async (req: Request, res: Response): Promise<void> => {
+   const { refreshToken, type } = req.body || req.cookies;
+
+   const user = await getUSerByRefreshToken(refreshToken, type);
+   if (user && !verifyUser(user, refreshToken)) throw new InvalidCodeError();
+
+   await blackListRefreshToken(user.refreshToken, user._id);
+   
+   res.clearCookie("accessToken");
+   res.clearCookie("refreshToken");
+   
+   res.status(200).json({
+      status: 'success',
+      message: "user logged out"
+   })
+}
