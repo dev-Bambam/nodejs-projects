@@ -1,21 +1,30 @@
 import { Request, Response } from "express";
 import { doHash, doCompare } from "../utils/hashing";
 import {
-   createUser, getUserByEmail,
-   getVerificationCode, hashAndSaveCode,
-   compareAndSave, getAccessToken,
+   createUser,
+   getUserByEmail,
+   getVerificationCode,
+   hashAndSaveCode,
+   compareAndSave,
+   getAccessToken,
    getRefreshToken,
 } from "../service/authService";
-import { NotFoundError, UserExistError, UserVerifiedError, UserNotVerifiedError, PasswordError } from "../utils/Errors/Errors";
+import {
+   NotFoundError,
+   UserExistError,
+   UserVerifiedError,
+   UserNotVerifiedError,
+   PasswordError,
+} from "../utils/Errors/Errors";
 import sendEmail from "../utils/sendEmail";
 import logger from "../utils/logger";
 
 // Magic numbers
 const SALT_VALUE = 10;
 const ACCESS_TOKEN_EXP = 15 * 60 * 1000; // 15 minutes in milliseconds
-const REFRESH_TOKEN_EXP = 24 * 60 * 60 * 1000 //24hrs
+const REFRESH_TOKEN_EXP = 24 * 60 * 60 * 1000; //24hrs
 
-const signUp = async (req: Request, res: Response): Promise<void> => {
+export const signUp = async (req: Request, res: Response): Promise<void> => {
    const { firstName, lastName, password, email, type } = req.body;
 
    const existingUser = await getUserByEmail(email, type);
@@ -73,32 +82,28 @@ export const codeVerification = async (req: Request, res: Response): Promise<voi
 export const login = async (req: Request, res: Response): Promise<void> => {
    const { email, password, type } = req.body;
 
-   const user = await getUserByEmail(email, type)
-   if (!user) throw new NotFoundError();
+   const user = await getUserByEmail(email, type);
    if (!user.verified) throw new UserNotVerifiedError();
    if (!doCompare(password, user.password)) throw new PasswordError();
 
-   const accessToken = getAccessToken(user._id);
+   const accessToken = getAccessToken(user._id, type);
    const refreshToken = getRefreshToken(user._id);
 
-   res.cookie('accessToken', accessToken,
-      {
-         maxAge: ACCESS_TOKEN_EXP,
-         httpOnly: true,
-         secure: true,
-         sameSite: 'lax'
-      }
-   );
-   res.cookie('refreshToken', refreshToken,
-      {
-         maxAge: REFRESH_TOKEN_EXP,
-         httpOnly: true,
-         secure: true,
-         sameSite: 'strict'
-      }
-   );
+   res.cookie("accessToken", accessToken, {
+      maxAge: ACCESS_TOKEN_EXP,
+      httpOnly: true,
+      secure: true,
+      sameSite: "lax",
+   });
+   res.cookie("refreshToken", refreshToken, {
+      maxAge: REFRESH_TOKEN_EXP,
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+   });
    res.status(200).json({
-      status: 'success',
-      message: 'user logged in'
-   })
-}
+      status: "success",
+      message: "user logged in",
+   });
+};
+
