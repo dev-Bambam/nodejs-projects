@@ -99,3 +99,73 @@
     at fulfilled (/home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/postController.ts:5:58)
     at processTicksAndRejections (node:internal/process/task_queues:95:5)
 [2025-04-10 12:31:44] ERROR: Operational Error: Validation failed
+[2025-04-11 10:01:11] ERROR: Programmer Error: TypeError: Cannot destructure property 'firstName' of 'req.body' as it is undefined.
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:13:12
+    at Generator.next (<anonymous>)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:4:12)
+    at signUp (/home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:12:76)
+    at Layer.handleRequest (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/router/lib/layer.js:152:17)
+    at next (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/router/lib/route.js:157:13)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/middleware/validationMW.ts:9:13
+    at Generator.next (<anonymous>)
+[2025-04-11 10:04:13] ERROR: Operational Error: Validation Failed
+[2025-04-11 10:04:49] ERROR: Programmer Error: SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+    at createStrictSyntaxError (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/body-parser/lib/types/json.js:156:10)
+    at parse (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/body-parser/lib/types/json.js:71:15)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/body-parser/lib/read.js:123:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/raw-body/index.js:238:16)
+    at done (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:519:28)
+    at IncomingMessage.emit (node:domain:488:12)
+[2025-04-11 10:05:16] ERROR: Programmer Error: SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+    at createStrictSyntaxError (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/body-parser/lib/types/json.js:156:10)
+    at parse (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/body-parser/lib/types/json.js:71:15)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/body-parser/lib/read.js:123:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/raw-body/index.js:238:16)
+    at done (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:519:28)
+    at IncomingMessage.emit (node:domain:488:12)
+[2025-04-11 10:05:21] ERROR: Programmer Error: SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+    at createStrictSyntaxError (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/body-parser/lib/types/json.js:156:10)
+    at parse (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/body-parser/lib/types/json.js:71:15)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/body-parser/lib/read.js:123:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/raw-body/index.js:238:16)
+    at done (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:519:28)
+    at IncomingMessage.emit (node:domain:488:12)
+[2025-04-11 10:05:34] ERROR: Programmer Error: TypeError: Cannot destructure property 'firstName' of 'req.body' as it is undefined.
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:13:12
+    at Generator.next (<anonymous>)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:4:12)
+    at signUp (/home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:12:76)
+    at Layer.handleRequest (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/router/lib/layer.js:152:17)
+    at next (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/router/lib/route.js:157:13)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/middleware/validationMW.ts:9:13
+    at Generator.next (<anonymous>)
+[2025-04-11 10:09:08] ERROR: Programmer Error: TypeError: Cannot destructure property 'firstName' of 'req.body' as it is undefined.
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:13:12
+    at Generator.next (<anonymous>)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:4:12)
+    at signUp (/home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:12:76)
+    at Layer.handleRequest (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/router/lib/layer.js:152:17)
+    at next (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/router/lib/route.js:157:13)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/middleware/validationMW.ts:9:13
+    at Generator.next (<anonymous>)
+[2025-04-11 10:12:00] ERROR: Operational Error: Validation Failed
+[2025-04-11 10:13:38] ERROR: Operational Error: Validation Failed
+[2025-04-11 10:14:13] INFO: new user registered succesfully and email sent to johndoe@example.com

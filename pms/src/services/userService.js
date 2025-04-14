@@ -24,8 +24,8 @@ export const findUserByEmail = async (email) => {
     return user ? user : null;
 }
 
-export const findUserByUsername = async (username) => {
-    const user = await User.findOne({ username });
+export const findUserByUsername = async (userName) => {
+    const user = await User.findOne({ userName });
     return user ? user : null
 };
 

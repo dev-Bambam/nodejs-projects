@@ -1,6 +1,5 @@
 import { createTransport } from 'nodemailer';
-import logger from './logger';
-
+import { EmailError } from './Errors/Errors';
 const transport = createTransport({
     service: 'gmail',
     auth: {
@@ -21,12 +20,11 @@ const sendEmail = async (email: string, subject: string, code: string): Promise<
         `,
         });
         if (!info.accepted.includes(email)) {
-            logger.error(`failed to send email to ${email}`);
-            throw new Error()
+            throw new EmailError(email)
         }
         return true;
-    } catch (error) {
-        throw new Error(`unexpected error occured: error.message`)
+    } catch (error:any) {
+        throw new EmailError(`failed to send email: ${error.message}`)
     }
 }
 

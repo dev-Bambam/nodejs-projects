@@ -5,7 +5,8 @@ import { ValidationError } from "../utils/Errors/Errors";
 const reqValidation = (schema: Joi.ObjectSchema) => {
     return async (req: Request, res: Response, next: NextFunction) => {
         try {
-            await schema.validateAsync(req.body, {abortEarly: false})
+            await schema.validateAsync(req.body, { abortEarly: false })
+            next()
         } catch (error:any) {
             if (error.isJoi) {
                 throw new ValidationError(error.details.map((err:any)=>err.message))

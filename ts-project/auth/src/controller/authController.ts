@@ -1,38 +1,34 @@
 import { Request, Response } from "express";
-import { doHash, doCompare, doHmac } from "../utils/hashing";
-import { signUpVal } from "../validator/authValidator";
-import { createUser, getUserByEmail } from "../service/authService";
+import { doHash, doCompare } from "../utils/hashing";
+import {
+   createUser, getUserByEmail,
+   getVerificationCode, hashAndSaveCode,
+   compareAndSave, getAccessToken,
+   getRefreshToken,
+} from "../service/authService";
+import { NotFoundError, UserExistError, UserVerifiedError, UserNotVerifiedError, PasswordError } from "../utils/Errors/Errors";
 import sendEmail from "../utils/sendEmail";
 import logger from "../utils/logger";
 
 // Magic numbers
 const SALT_VALUE = 10;
-const CODE_EXPIRY = 60 * 60 * 1000; // 1 hour
+const ACCESS_TOKEN_EXP = 15 * 60 * 1000; // 15 minutes in milliseconds
+const REFRESH_TOKEN_EXP = 24 * 60 * 60 * 1000 //24hrs
 
-export const signUp = async (req: Request, res: Response): Promise<void> => {
+const signUp = async (req: Request, res: Response): Promise<void> => {
    const { firstName, lastName, password, email, type } = req.body;
-   // check if user already register
+
    const existingUser = await getUserByEmail(email, type);
-   if (existingUser) {
-      throw new Error("user already exist");
-   }
-   // hash password and create
+   if (existingUser) throw new UserExistError();
+
    const hashedPassword = await doHash(password, SALT_VALUE);
-   const user = {
-      firstName,
-      lastName,
-      password: hashedPassword,
-      email,
-   };
+   const user = { firstName, lastName, password: hashedPassword, email };
    const newUser = await createUser(user, type);
-   // generate verification code and send to email
-   const verificationCode: string = Math.floor(1e5 + Math.random() * 9e5).toString();
-   const info: boolean = await sendEmail(newUser.email, "Email verification", verificationCode);
-   // hashed the verification code and store it in the database
-   const hashedVerificationCode = doHmac(verificationCode, process.env.HMAC_KEY);
-   newUser.emailVerificationCode = hashedVerificationCode;
-   newUser.emailCodeValidation = Date.now() + CODE_EXPIRY;
-   await newUser.save();
+
+   const verificationCode = getVerificationCode();
+   await sendEmail(newUser.email, "Email verification", verificationCode);
+   await hashAndSaveCode(newUser, verificationCode);
+
    logger.info(`new user registered succesfully and email sent to ${newUser.email}`);
 
    res.status(201).json({
@@ -40,3 +36,69 @@ export const signUp = async (req: Request, res: Response): Promise<void> => {
       message: "user registered successfully",
    });
 };
+export const resendEmailCode = async (req: Request, res: Response): Promise<void> => {
+   const { email, type } = req.body;
+
+   const user = await getUserByEmail(email, type);
+   if (!user) throw new NotFoundError();
+   if (user.verified) throw new UserVerifiedError();
+
+   const code = getVerificationCode();
+   await sendEmail(email, "Email Verification", code);
+   await hashAndSaveCode(user, code);
+
+   logger.info(`new verification code sent to ${user.email}`);
+
+   res.status(200).json({
+      status: "success",
+      message: "verification code sent",
+   });
+};
+
+export const codeVerification = async (req: Request, res: Response): Promise<void> => {
+   const { email, code, type } = req.body;
+
+   const user = await getUserByEmail(email, type);
+   if (!user) throw new NotFoundError();
+   if (user.verified) throw new UserVerifiedError();
+
+   await compareAndSave(user, code);
+
+   res.status(200).json({
+      status: "success",
+      message: "code verified successfully",
+   });
+};
+
+export const login = async (req: Request, res: Response): Promise<void> => {
+   const { email, password, type } = req.body;
+
+   const user = await getUserByEmail(email, type)
+   if (!user) throw new NotFoundError();
+   if (!user.verified) throw new UserNotVerifiedError();
+   if (!doCompare(password, user.password)) throw new PasswordError();
+
+   const accessToken = getAccessToken(user._id);
+   const refreshToken = getRefreshToken(user._id);
+
+   res.cookie('accessToken', accessToken,
+      {
+         maxAge: ACCESS_TOKEN_EXP,
+         httpOnly: true,
+         secure: true,
+         sameSite: 'lax'
+      }
+   );
+   res.cookie('refreshToken', refreshToken,
+      {
+         maxAge: REFRESH_TOKEN_EXP,
+         httpOnly: true,
+         secure: true,
+         sameSite: 'strict'
+      }
+   );
+   res.status(200).json({
+      status: 'success',
+      message: 'user logged in'
+   })
+}

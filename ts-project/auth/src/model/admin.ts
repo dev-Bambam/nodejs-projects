@@ -6,10 +6,8 @@ export interface AdminDocument extends Document {
    email: string;
    password: string;
    verified: boolean;
-   passwordResetCode: string | undefined;
-   passwordResetValidation: number | undefined;
-   emailVerificationCode: string | undefined;
-   emailCodeValidation: number | undefined;
+   code: string | undefined;
+   codeValidation: number | undefined;
    refreshToken: string | undefined;
 }
 
@@ -29,34 +27,25 @@ const adminSchema = new Schema<AdminDocument>(
          type: String,
          trim: true,
          required: true,
-         unique: true
+         unique: true,
       },
       password: {
          type: String,
          required: true,
          select: false,
-         trim: true
+         trim: true,
       },
       verified: {
          type: Boolean,
          default: false,
          select: false,
       },
-      passwordResetCode: {
-         type: String,
-         select: false,
-         default: null
-      },
-      passwordResetValidation: {
-         type: Number,
+      code: {
+         type: String, // Code for both email verification and password reset
          select: false,
       },
-      emailVerificationCode: {
-         type: String,
-         select: false,
-      },
-      emailCodeValidation: {
-         type: Number,
+      codeValidation: {
+         type: Number, // Expiry timestamp for the code
          select: false,
       },
       refreshToken: {
@@ -69,4 +58,4 @@ const adminSchema = new Schema<AdminDocument>(
 
 const Admin = model<AdminDocument>("Admin", adminSchema);
 
-export default Admin
+export default Admin;

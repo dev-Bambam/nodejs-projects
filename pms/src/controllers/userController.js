@@ -1,14 +1,14 @@
 import * as service from "./../services/userService.js";
-import { validateUser } from "../utils/validators/userValidator.js";
+import { validateRegistration, validateLogin } from "../utils/validators/userValidator.js";
 
 export const userRegistration = async (req, res) => {
-    const { error } = validateUser(req.body);
-    if (error) {
-        return res.status(400).json({
-            status: 'fail',
-            message: error.details.map(err => err.message).join(', ')
-        })
-    }
+   const { error } = validateRegistration(req.body);
+   if (error) {
+      return res.status(400).json({
+         status: "fail",
+         message: error.details.map((err) => err.message).join(", "),
+      });
+   }
    const userData = req.body;
    try {
       const newUser = await service.creatUser(userData);
@@ -26,19 +26,28 @@ export const userRegistration = async (req, res) => {
 };
 
 export const userLogin = async (req, res) => {
+   const { error } = validateLogin(req.body);
+   if (error) {
+      return res.status(400).json({
+         status: "fail",
+         message: error.details.map((err) => err.message).join(", "),
+      });
+   }
    const userData = req.body;
    const { userInput, password } = userData;
 
    try {
       let user;
 
-      if (userInput.includes("@")) {
-         user = await service.findUserByEmail(userInput);
-      } else {
-         user = await service.findUserByUsername(userInput);
+       if (userInput.includes("@")) {
+          const email = userInput
+         user = await service.findUserByEmail(email);
+       } else {
+           const userName = userInput
+         user = await service.findUserByUsername(userName);
       }
       if (!user) {
-         return res.status(401).json({
+         return res.status(400).json({
             status: "fail",
             message: "invalid username or email",
          });

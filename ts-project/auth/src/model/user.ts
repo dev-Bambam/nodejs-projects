@@ -6,10 +6,8 @@ export interface UserDocument extends Document{
     lastName: string,
     email: string,
     password: string,
-    passwordResetCode: string | undefined,
-    passwordResetValidation: number | undefined,
-    emailVerificationCode: string | undefined,
-    emailCodeValidation: number | undefined,
+    code: string | undefined,
+    codeValidation: number | undefined,
     verified: boolean,
     refreshToken: string | undefined
 }
@@ -38,20 +36,12 @@ const userSchema = new Schema<UserDocument>(
          select: false,
          trim: true,
       },
-      passwordResetCode: {
-         type: String,
+      code: {
+         type: String, // Code for both email verification and password reset
          select: false,
       },
-      passwordResetValidation: {
-         type: Number,
-         select: false,
-      },
-      emailVerificationCode: {
-         type: String,
-         select: false,
-      },
-      emailCodeValidation: {
-         type: Number,
+      codeValidation: {
+         type: Number, // Expiry timestamp for the code
          select: false,
       },
       verified: {

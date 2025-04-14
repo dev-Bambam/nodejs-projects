@@ -12,6 +12,8 @@
   "description": "",
   "dependencies": {
     "express": "^4.21.2",
+    "ioredis": "^5.5.0",
+    "mongoose": "^8.10.2",
     "socket.io": "^4.8.1",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
