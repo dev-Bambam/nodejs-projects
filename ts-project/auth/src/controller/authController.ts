@@ -90,6 +90,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
    const { email, password, type } = req.body;
 
    const user = await getUserByEmail(email, type);
+   if (!user) throw new NotFoundError();
    if (!user.verified) throw new UserNotVerifiedError();
    if (!doCompare(password, user.password)) throw new PasswordError();
 
@@ -119,6 +120,7 @@ export const forgotPassword = async (req: Request, res: Response): Promise<void>
    const { email, type } = req.body;
 
    const user = await getUserByEmail(email, type);
+   if (!user) throw new NotFoundError();
    if (!user.verified) throw new UserNotVerifiedError();
 
    const code = getVerificationCode();
@@ -135,6 +137,7 @@ export const resetPassword = async (req: Request, res: Response): Promise<void> 
    const { email, type, code, password } = req.body;
 
    const user = await getUserByEmail(email, type);
+   if (!user) throw new NotFoundError();
    if (!user.verified) throw new UserNotVerifiedError();
 
    await compareAndSave(user, code, password);
@@ -149,6 +152,7 @@ export const logOut = async (req: Request, res: Response): Promise<void> => {
    const { refreshToken, type } = req.body || req.cookies;
 
    const user = await getUSerByRefreshToken(refreshToken, type);
+   if (!user) throw new NotFoundError();
    if (user && user.refreshToken) {
       if (!verifyUser(user, refreshToken)) throw new InvalidCodeError();
       await blackListRefreshToken(user.refreshToken, user);
@@ -163,10 +167,11 @@ export const logOut = async (req: Request, res: Response): Promise<void> => {
    });
 };
 
-export const refreshToken = async (req: Request, res: Response): Promise<void> => {
+export const generateRefreshToken = async (req: Request, res: Response): Promise<void> => {
    const { refreshToken, type } = req.body ?? req.cookies;
 
    const user = await getUSerByRefreshToken(refreshToken, type);
+   if (!user) throw new NotFoundError();
    if (user) {
       await checkForRevokedToken(refreshToken);
       verifyActiveTokenMatch(user, refreshToken);

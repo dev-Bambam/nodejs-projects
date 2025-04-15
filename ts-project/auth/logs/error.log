@@ -1,23 +1,2 @@
-[2025-04-11 10:12:00] ERROR: Operational Error: Validation Failed
-[2025-04-11 10:13:38] ERROR: Operational Error: Validation Failed
-[2025-04-11 10:18:23] ERROR: Operational Error: User already exist
-[2025-04-11 10:18:49] ERROR: Operational Error: User already exist
-[2025-04-11 10:22:51] ERROR: Operational Error: User already exist
-[2025-04-11 10:28:33] ERROR: Programmer Error: Error: Email was not accepted by the recipient's server: failed to send email: connect ENETUNREACH 2a00:1450:400b:c00::6d:465 - Local (:::0)
-    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/utils/sendEmail.ts:27:15
-    at Generator.throw (<anonymous>)
-    at rejected (/home/bambam/Desktop/SAILproject/ts-project/auth/src/utils/sendEmail.ts:6:65)
-    at processTicksAndRejections (node:internal/process/task_queues:95:5)
-[2025-04-11 10:29:51] ERROR: Operational Error: User already exist
-[2025-04-11 11:22:58] ERROR: Programmer Error: Error: Invalid type
-    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/service/authService.ts:17:10
-    at Generator.next (<anonymous>)
-    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/service/authService.ts:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/bambam/Desktop/SAILproject/ts-project/auth/src/service/authService.ts:4:12)
-    at getUserByEmail (/home/bambam/Desktop/SAILproject/ts-project/auth/src/service/authService.ts:14:69)
-    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:50:37
-    at Generator.next (<anonymous>)
-    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:8:71
-    at new Promise (<anonymous>)
-[2025-04-11 11:51:50] ERROR: Operational Error: User already exist
+[2025-04-15 16:30:57] ERROR: Operational Error: User already exist
+[2025-04-15 16:31:43] ERROR: Operational Error: User not found
