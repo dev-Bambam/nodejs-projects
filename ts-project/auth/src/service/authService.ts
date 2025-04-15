@@ -90,10 +90,10 @@ export const verifyUser = (user: userType, refreshToken: string) => {
    return user.refreshToken === doHmac(refreshToken, process.env.HMAC_KEY);
 };
 
-export const blackListRefreshToken = async (refreshToken: string, userId: userId) => {
+export const blackListRefreshToken = async (refreshToken: string, user:userType) => {
    await RevokedToken.create({
       token: refreshToken,
-      userId,
+      userId: user._id,
       expiresAt: new Date(Date.now() + REFRESH_TOKEN_EXP)
    });
 }
@@ -107,4 +107,10 @@ export const verifyActiveTokenMatch = (user:userType,refreshToken: string) => {
    if (!(user.refreshToken === doHmac(refreshToken, process.env.HMAC_KEY))) throw new InvalidCodeError();
 
    return true
+}
+
+export const hashAndSaveToken = async (user: userType, token: string) => {
+   const hashedToken = doHmac(token, process.env.HMAC_KEY);
+   user.refreshToken = hashedToken;
+   await user.save();
 }

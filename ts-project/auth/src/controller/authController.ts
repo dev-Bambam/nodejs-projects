@@ -12,6 +12,8 @@ import {
    verifyUser,
    blackListRefreshToken,
    checkForRevokedToken,
+   verifyActiveTokenMatch,
+   hashAndSaveToken
 } from "../service/authService";
 import {
    NotFoundError,
@@ -93,6 +95,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
    const accessToken = getAccessToken(user._id, type);
    const refreshToken = getRefreshToken(user._id, type);
+   await hashAndSaveToken(user, refreshToken)
 
    res.cookie("accessToken", accessToken, {
       maxAge: ACCESS_TOKEN_EXP,
@@ -148,7 +151,7 @@ export const logOut = async (req: Request, res: Response): Promise<void> => {
    const user = await getUSerByRefreshToken(refreshToken, type);
    if (user && user.refreshToken) {
       if (!verifyUser(user, refreshToken)) throw new InvalidCodeError();
-      await blackListRefreshToken(user.refreshToken, user._id);
+      await blackListRefreshToken(user.refreshToken, user);
    }
 
    res.clearCookie("accessToken");
@@ -164,6 +167,40 @@ export const refreshToken = async (req: Request, res: Response): Promise<void> =
    const { refreshToken, type } = req.body ?? req.cookies;
 
    const user = await getUSerByRefreshToken(refreshToken, type);
-   await checkForRevokedToken(refreshToken);
-   
+   if (user) {
+      await checkForRevokedToken(refreshToken);
+      verifyActiveTokenMatch(user, refreshToken);
+
+      const newAccessToken = getAccessToken(user._id, type);
+      const newRefreshToken = getRefreshToken(user._id, type);
+
+      await blackListRefreshToken(refreshToken, user);
+      await hashAndSaveToken(user, newRefreshToken);
+
+      res.cookie(
+         "accessToken",
+         newAccessToken,
+         {
+            maxAge: ACCESS_TOKEN_EXP,
+            httpOnly: true,
+            secure: true,
+            sameSite: 'lax'
+         }
+      );
+      res.cookie(
+         'refreshToken',
+         newRefreshToken,
+         {
+            maxAge: REFRESH_TOKEN_EXP,
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict'
+         }
+      );
+      res.status(200).json({
+         status: 'success',
+         message: "new access token generated"
+      })
+   }
+   throw new Error('something went wrong')
 }
