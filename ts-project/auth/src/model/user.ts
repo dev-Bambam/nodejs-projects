@@ -1,7 +1,8 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document, ObjectId } from "mongoose";
 
 // create interface 
 export interface UserDocument extends Document{
+   _id: ObjectId,
     firstName: string,
     lastName: string,
     email: string,

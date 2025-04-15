@@ -9,7 +9,9 @@ import {
    getAccessToken,
    getRefreshToken,
    getUSerByRefreshToken,
-   verifyUser
+   verifyUser,
+   blackListRefreshToken,
+   checkForRevokedToken,
 } from "../service/authService";
 import {
    NotFoundError,
@@ -112,18 +114,18 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
 export const forgotPassword = async (req: Request, res: Response): Promise<void> => {
    const { email, type } = req.body;
-   
+
    const user = await getUserByEmail(email, type);
    if (!user.verified) throw new UserNotVerifiedError();
 
    const code = getVerificationCode();
-   await sendEmail(email, "Password Reset", code)
+   await sendEmail(email, "Password Reset", code);
    await hashAndSaveCode(user, code);
 
    res.status(200).json({
       status: "success",
-      message: "check your email to get password reset code"
-   })
+      message: "check your email to get password reset code",
+   });
 };
 
 export const resetPassword = async (req: Request, res: Response): Promise<void> => {
@@ -135,24 +137,33 @@ export const resetPassword = async (req: Request, res: Response): Promise<void> 
    await compareAndSave(user, code, password);
 
    res.status(200).json({
-      status: 'success',
-      message: 'password reset successfully'
-   })
-}
+      status: "success",
+      message: "password reset successfully",
+   });
+};
 
 export const logOut = async (req: Request, res: Response): Promise<void> => {
    const { refreshToken, type } = req.body || req.cookies;
 
    const user = await getUSerByRefreshToken(refreshToken, type);
-   if (user && !verifyUser(user, refreshToken)) throw new InvalidCodeError();
+   if (user && user.refreshToken) {
+      if (!verifyUser(user, refreshToken)) throw new InvalidCodeError();
+      await blackListRefreshToken(user.refreshToken, user._id);
+   }
 
-   await blackListRefreshToken(user.refreshToken, user._id);
-   
    res.clearCookie("accessToken");
    res.clearCookie("refreshToken");
-   
+
    res.status(200).json({
-      status: 'success',
-      message: "user logged out"
-   })
+      status: "success",
+      message: "user logged out",
+   });
+};
+
+export const refreshToken = async (req: Request, res: Response): Promise<void> => {
+   const { refreshToken, type } = req.body ?? req.cookies;
+
+   const user = await getUSerByRefreshToken(refreshToken, type);
+   await checkForRevokedToken(refreshToken);
+   
 }

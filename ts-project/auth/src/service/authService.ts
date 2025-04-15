@@ -5,6 +5,7 @@ import RevokedToken from "../model/revokedToken";
 import { doHmac, doHmacCompare, doHash } from "../utils/hashing";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
+import { refreshToken } from "../controller/authController";
 
 // Magic Number
 const CODE_EXPIRY = 5 * 60 * 1000; // 5 minutes
@@ -25,7 +26,7 @@ export const createUser = async (data: object, type: string): Promise<userType> 
 export const getUserByEmail = async (email: string, type: string) => {
    if (type === "user") {
       const user = await User.findOne({ email }).select(
-         "password emailVerificationCode emailCodeValidation verified "
+         "+password emailVerificationCode emailCodeValidation verified "
       );
       if (!user) throw new NotFoundError();
       return user;
@@ -33,7 +34,7 @@ export const getUserByEmail = async (email: string, type: string) => {
 
    if (type === "admin") {
       const admin = await Admin.findOne({ email }).select(
-         "password emailVerificationCode emailCodeValidation verified "
+         "+password emailVerificationCode emailCodeValidation verified "
       );
       if (!admin) throw new NotFoundError();
       return admin;
@@ -78,10 +79,10 @@ export const getUSerByRefreshToken = async (refreshToken: string, type: string) 
    if (!process.env.JWT_REFRESH_TOKEN) throw new Error("env not set");
    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN);
    if (type === "user") {
-      return await User.findById(decoded.sub).select("refreshToken");
+      return await User.findById(decoded.sub).select("+refreshToken");
    }
    if (type === "admin") {
-      return await Admin.findById(decoded.sub).select("refreshToken");
+      return await Admin.findById(decoded.sub).select("+refreshToken");
    }
 };
 
@@ -89,10 +90,21 @@ export const verifyUser = (user: userType, refreshToken: string) => {
    return user.refreshToken === doHmac(refreshToken, process.env.HMAC_KEY);
 };
 
-export const blackListRefreshToken = async (refreshToken: string, userId: mongoose.Types.ObjectId) => {
+export const blackListRefreshToken = async (refreshToken: string, userId: userId) => {
    await RevokedToken.create({
       token: refreshToken,
       userId,
       expiresAt: new Date(Date.now() + REFRESH_TOKEN_EXP)
    });
+}
+
+export const checkForRevokedToken = async (refreshToken: string) => {
+   const revokedToken = await RevokedToken.findOne({ token:refreshToken });
+   if (revokedToken) throw new InvalidCodeError();
+}
+
+export const verifyActiveTokenMatch = (user:userType,refreshToken: string) => {
+   if (!(user.refreshToken === doHmac(refreshToken, process.env.HMAC_KEY))) throw new InvalidCodeError();
+
+   return true
 }
