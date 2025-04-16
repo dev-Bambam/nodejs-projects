@@ -15,5 +15,6 @@ export const doHmac = (data: string, key: string | undefined) => {
 };
 
 export const doHmacCompare = (data: string, hashedData: string | undefined): boolean => {
+   console.log(`data:${data}, hashedData:${hashedData}`)
    return hashedData === doHmac(data, process.env.HMAC_KEY);
 };

@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 
 // Magic Number
-const CODE_EXPIRY = 5 * 60 * 1000; // 5 minutes
+const CODE_EXPIRY = 25 * 60 * 1000; // 25 minutes
 const ACCESS_TOKEN_EXP = "15m"; // 15 minutes
 const REFRESH_TOKEN_EXP = "1d"; // 1hr
 const SALT_VALUE = 10;
@@ -25,13 +25,13 @@ export const createUser = async (data: object, type: string): Promise<userType> 
 export const getUserByEmail = async (email: string, type: string) => {
    if (type === "user") {
       return await User.findOne({ email }).select(
-         "+password emailVerificationCode emailCodeValidation verified "
+         "+password code codeValidation refreshedToken verified "
       );
    }
 
    if (type === "admin") {
       return await Admin.findOne({ email }).select(
-         "+password emailVerificationCode emailCodeValidation verified "
+         "+password code codeValidation refreshedToken verified "
       );
    }
    throw new InvalidError();
@@ -47,7 +47,9 @@ export const hashAndSaveCode = async (user: userType, code: string) => {
 };
 export const compareAndSave = async (user: userType, code: string, password?: string) => {
    const valid = doHmacCompare(code, user.code);
+   console.log("I got here");
    if (!valid) throw new InvalidCodeError();
+   console.log("I am suppose to be logged but...");
    if (user.codeValidation && Date.now() > user.codeValidation) throw new InvalidCodeError();
    user.verified = true;
    user.code = undefined;

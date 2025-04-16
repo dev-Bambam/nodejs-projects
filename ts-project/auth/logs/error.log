@@ -1,2 +1,39 @@
 [2025-04-15 16:30:57] ERROR: Operational Error: User already exist
 [2025-04-15 16:31:43] ERROR: Operational Error: User not found
+[2025-04-15 19:51:34] ERROR: Programmer Error: Error: please provide data or key value
+    at doHmac (/home/bambam/Desktop/SAILproject/ts-project/auth/src/utils/hashing.ts:13:29)
+    at doHmacCompare (/home/bambam/Desktop/SAILproject/ts-project/auth/src/utils/hashing.ts:18:32)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/service/authService.ts:49:31
+    at Generator.next (<anonymous>)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/service/authService.ts:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/home/bambam/Desktop/SAILproject/ts-project/auth/src/service/authService.ts:4:12)
+    at compareAndSave (/home/bambam/Desktop/SAILproject/ts-project/auth/src/service/authService.ts:48:89)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:81:24
+    at Generator.next (<anonymous>)
+[2025-04-15 19:52:57] ERROR: Operational Error: Invalid or Expires code
+[2025-04-15 19:53:28] ERROR: Operational Error: User not found
+[2025-04-15 19:55:51] ERROR: Programmer Error: SyntaxError: Expected double-quoted property name in JSON at position 58
+    at JSON.parse (<anonymous>)
+    at parse (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/body-parser/lib/types/json.js:77:19)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/body-parser/lib/read.js:123:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/raw-body/index.js:238:16)
+    at done (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:519:28)
+    at IncomingMessage.emit (node:domain:488:12)
+    at endReadableNT (node:internal/streams/readable:1696:12)
+[2025-04-15 19:56:25] ERROR: Operational Error: User not found
+[2025-04-15 19:57:46] ERROR: Operational Error: User not found
+[2025-04-15 19:57:56] ERROR: Operational Error: Invalid or Expires code
+[2025-04-15 19:58:21] ERROR: Operational Error: Invalid or Expires code
+[2025-04-15 20:04:31] ERROR: Operational Error: Invalid or Expires code
+[2025-04-15 20:11:55] ERROR: Operational Error: Invalid or Expires code
+[2025-04-15 20:14:12] ERROR: Operational Error: Invalid or Expires code
+[2025-04-15 20:19:24] ERROR: Operational Error: user already verified
+[2025-04-15 20:21:50] ERROR: Operational Error: User not yet verified
+[2025-04-15 20:22:26] ERROR: Operational Error: User not yet verified
+[2025-04-15 20:23:02] ERROR: Operational Error: User not yet verified
+[2025-04-15 20:25:45] ERROR: Operational Error: User not yet verified
+[2025-04-15 20:31:07] ERROR: Operational Error: Invalid or Expires code
