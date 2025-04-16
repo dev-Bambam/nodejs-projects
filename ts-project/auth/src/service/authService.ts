@@ -10,6 +10,7 @@ import mongoose from "mongoose";
 const CODE_EXPIRY = 25 * 60 * 1000; // 25 minutes
 const ACCESS_TOKEN_EXP = "15m"; // 15 minutes
 const REFRESH_TOKEN_EXP = "1d"; // 1hr
+const TOKEN_EXP = 24 * 60 * 60 * 1000; //1day
 const SALT_VALUE = 10;
 
 // Types declaration
@@ -75,6 +76,7 @@ export const getRefreshToken = (userId: userId, type: string): string => {
 export const getUSerByRefreshToken = async (refreshToken: string, type: string) => {
    if (!process.env.JWT_REFRESH_TOKEN) throw new Error("env not set");
    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN);
+   console.log(decoded.sub)
    if (type === "user") {
       return await User.findById(decoded.sub).select("+refreshToken");
    }
@@ -91,7 +93,7 @@ export const blackListRefreshToken = async (refreshToken: string, user: userType
    await RevokedToken.create({
       token: refreshToken,
       userId: user._id,
-      expiresAt: new Date(Date.now() + REFRESH_TOKEN_EXP),
+      expiresAt: new Date(Date.now() + TOKEN_EXP),
    });
 };
 
@@ -101,6 +103,8 @@ export const checkForRevokedToken = async (refreshToken: string) => {
 };
 
 export const verifyActiveTokenMatch = (user: userType, refreshToken: string) => {
+   console.log(`input:${doHmac(refreshToken, process.env.HMAC_KEY)}, exist:${user.refreshToken}`);
+
    if (!(user.refreshToken === doHmac(refreshToken, process.env.HMAC_KEY)))
       throw new InvalidCodeError();
 

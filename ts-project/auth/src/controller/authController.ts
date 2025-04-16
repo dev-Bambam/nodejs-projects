@@ -92,7 +92,9 @@ export const login = async (req: Request, res: Response): Promise<void> => {
    const user = await getUserByEmail(email, type);
    if (!user) throw new NotFoundError();
    if (!user.verified) throw new UserNotVerifiedError();
-   if (!doCompare(password, user.password)) throw new PasswordError();
+
+   const correctPassword = await doCompare(password, user.password);
+   if (!correctPassword) throw new PasswordError();
 
    const accessToken = getAccessToken(user._id, type);
    const refreshToken = getRefreshToken(user._id, type);
@@ -175,6 +177,7 @@ export const generateRefreshToken = async (req: Request, res: Response): Promise
    if (user) {
       await checkForRevokedToken(refreshToken);
       verifyActiveTokenMatch(user, refreshToken);
+      console.log(`I got here {2}`);
 
       const newAccessToken = getAccessToken(user._id, type);
       const newRefreshToken = getRefreshToken(user._id, type);
@@ -207,5 +210,4 @@ export const generateRefreshToken = async (req: Request, res: Response): Promise
          message: "new access token generated"
       })
    }
-   throw new Error('something went wrong')
 }

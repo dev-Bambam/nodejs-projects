@@ -59,7 +59,7 @@ export class UserVerifiedError extends BaseError{
 
 export class InvalidCodeError extends BaseError {
    constructor() {
-      super("Invalid or Expires code", 400, "INVALID_CODE_ERR");
+      super("Invalid or Expired code", 400, "INVALID_CODE_ERR");
    }
 }
 

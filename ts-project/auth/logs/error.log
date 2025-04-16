@@ -37,3 +37,91 @@
 [2025-04-15 20:23:02] ERROR: Operational Error: User not yet verified
 [2025-04-15 20:25:45] ERROR: Operational Error: User not yet verified
 [2025-04-15 20:31:07] ERROR: Operational Error: Invalid or Expires code
+[2025-04-16 10:10:44] ERROR: Operational Error: Invalid or Expires code
+[2025-04-16 10:11:26] ERROR: Operational Error: user already verified
+[2025-04-16 10:11:46] ERROR: Operational Error: user already verified
+[2025-04-16 10:32:26] ERROR: Operational Error: password is incorrect
+[2025-04-16 10:32:53] ERROR: Operational Error: password is incorrect
+[2025-04-16 10:34:16] ERROR: Operational Error: password is incorrect
+[2025-04-16 10:41:49] ERROR: Operational Error: User not found
+[2025-04-16 10:42:01] ERROR: Operational Error: password is incorrect
+[2025-04-16 10:46:03] ERROR: Programmer Error: JsonWebTokenError: jwt must be provided
+    at Object.module.exports [as verify] (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/jsonwebtoken/verify.js:60:17)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/service/authService.ts:77:24
+    at Generator.next (<anonymous>)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/service/authService.ts:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/home/bambam/Desktop/SAILproject/ts-project/auth/src/service/authService.ts:4:12)
+    at getUSerByRefreshToken (/home/bambam/Desktop/SAILproject/ts-project/auth/src/service/authService.ts:75:83)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:175:44
+    at Generator.next (<anonymous>)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:8:71
+[2025-04-16 10:49:08] ERROR: Operational Error: User not found
+[2025-04-16 10:52:36] ERROR: Operational Error: User not found
+[2025-04-16 10:59:21] ERROR: Programmer Error: JsonWebTokenError: invalid signature
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/jsonwebtoken/verify.js:171:19
+    at getSecret (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/jsonwebtoken/verify.js:97:14)
+    at Object.module.exports [as verify] (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/jsonwebtoken/verify.js:101:10)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/service/authService.ts:77:24
+    at Generator.next (<anonymous>)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/service/authService.ts:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/home/bambam/Desktop/SAILproject/ts-project/auth/src/service/authService.ts:4:12)
+    at getUSerByRefreshToken (/home/bambam/Desktop/SAILproject/ts-project/auth/src/service/authService.ts:75:83)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:175:44
+[2025-04-16 11:04:00] ERROR: Operational Error: User not found
+[2025-04-16 11:09:58] ERROR: Operational Error: Invalid or Expires code
+[2025-04-16 11:14:49] ERROR: Operational Error: Invalid or Expired code
+[2025-04-16 11:19:34] ERROR: Operational Error: Invalid or Expired code
+[2025-04-16 11:21:18] ERROR: Operational Error: Invalid or Expired code
+[2025-04-16 11:23:43] ERROR: Operational Error: Invalid or Expired code
+[2025-04-16 11:24:54] ERROR: Operational Error: Invalid or Expired code
+[2025-04-16 11:27:05] ERROR: Operational Error: Invalid or Expired code
+[2025-04-16 11:55:28] ERROR: Operational Error: Invalid or Expired code
+[2025-04-16 11:57:29] ERROR: Operational Error: Invalid or Expired code
+[2025-04-16 11:58:37] ERROR: Programmer Error: ValidationError: RevokedToken validation failed: expiresAt: Cast to date failed for value "Invalid Date" (type Date) at path "expiresAt"
+    at model.Document.invalidate (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/document.js:3329:32)
+    at model.$set (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/document.js:1480:12)
+    at model.$set (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/document.js:1132:16)
+    at model.Document (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/document.js:178:12)
+    at model.Model (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/model.js:128:12)
+    at new model (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/model.js:4800:15)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/model.js:2759:20
+    at Array.map (<anonymous>)
+    at Function.create (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/model.js:2747:34)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/service/authService.ts:92:23
+[2025-04-16 11:59:31] ERROR: Programmer Error: ValidationError: RevokedToken validation failed: expiresAt: Cast to date failed for value "Invalid Date" (type Date) at path "expiresAt"
+    at model.Document.invalidate (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/document.js:3329:32)
+    at model.$set (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/document.js:1480:12)
+    at model.$set (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/document.js:1132:16)
+    at model.Document (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/document.js:178:12)
+    at model.Model (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/model.js:128:12)
+    at new model (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/model.js:4800:15)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/model.js:2759:20
+    at Array.map (<anonymous>)
+    at Function.create (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/model.js:2747:34)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/service/authService.ts:92:23
+[2025-04-16 12:05:51] ERROR: Programmer Error: ValidationError: RevokedToken validation failed: expiresAt: Cast to date failed for value "Invalid Date" (type Date) at path "expiresAt"
+    at model.Document.invalidate (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/document.js:3329:32)
+    at model.$set (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/document.js:1480:12)
+    at model.$set (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/document.js:1132:16)
+    at model.Document (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/document.js:178:12)
+    at model.Model (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/model.js:128:12)
+    at new model (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/model.js:4800:15)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/model.js:2759:20
+    at Array.map (<anonymous>)
+    at Function.create (/home/bambam/Desktop/SAILproject/ts-project/auth/node_modules/mongoose/lib/model.js:2747:34)
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/service/authService.ts:92:23
+[2025-04-16 12:10:47] ERROR: Programmer Error: Error: something went wrong
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:213:10
+    at Generator.next (<anonymous>)
+    at fulfilled (/home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-04-16 12:15:13] ERROR: Operational Error: Invalid or Expired code
+[2025-04-16 12:17:21] ERROR: Programmer Error: Error: something went wrong
+    at /home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:213:10
+    at Generator.next (<anonymous>)
+    at fulfilled (/home/bambam/Desktop/SAILproject/ts-project/auth/src/controller/authController.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-04-16 12:18:37] ERROR: Operational Error: Invalid or Expired code
+[2025-04-16 12:19:47] ERROR: Operational Error: Invalid or Expired code
