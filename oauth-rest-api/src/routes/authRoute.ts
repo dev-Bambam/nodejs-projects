@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+dotenv.config()
 import express, { Router, Request, Response } from "express";
 import passport from "passport";
 import jwt from "jsonwebtoken";
@@ -11,17 +13,23 @@ router.get(
 );
 
 router.get(
-    '/google/callback',
-    passport.authenticate('google', { session: false, failureRedirect: '/' }),
-    (req: Request, res: Response) => {
-        const user = req.user as any;
-        const token = jwt.sign(
-           { id: user._id, email: user.email, authProvider: user.authProvider },
-           JWT_SECRET,
-           { expiresIn: '1h' }
-        );
-        res.json({token})
-    }
-)
+   "/google/callback",
+   passport.authenticate("google", { session: false, failureRedirect: "/" }),
+   (req: Request, res: Response) => {
+      try {
+         const user = req.user as any;
+         if (!user) throw new Error("No user found");
+         const token = jwt.sign(
+            { id: user._id, email: user.email, authProvider: user.authProvider },
+            JWT_SECRET,
+            { expiresIn: "1h" }
+         );
+         res.json({ token });
+      } catch (error) {
+         console.error("Callback Error:", error);
+         res.status(500).json({ error: "Internal Server Error" });
+      }
+   }
+);
 
 export default router
