@@ -2,11 +2,21 @@ import dotenv from 'dotenv';
 dotenv.config()
 import express, { Router, Request, Response } from "express";
 import passport from "passport";
+import bcrypt from 'bcryptjs';
+import User, { IUser, IJwtPayload } from 'models/user';
 import jwt from "jsonwebtoken";
 
 const router: Router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET!;
 
+// interface
+
+
+
+// local Auth routes
+
+
+// OAuth route
 router.get(
    "/google",
    passport.authenticate("google", { scope: ["profile", "email"], session: false })

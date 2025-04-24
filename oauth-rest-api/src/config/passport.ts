@@ -1,9 +1,11 @@
 import dotenv from "dotenv";
 dotenv.config();
 import passport from "passport";
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import { Strategy as GoogleStrategy, Profile, VerifyCallback } from "passport-google-oauth20";
+import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
-import User, { IUser } from "../models/user";
+import User, { IUser, IJwtPayload } from "../models/user";
+import bcrypt from "bcryptjs";
 
 passport.use(
    new GoogleStrategy(
@@ -12,7 +14,12 @@ passport.use(
          clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
          callbackURL: "http://localhost:3000/auth/google/callback",
       },
-      async (_accessToken, _refreshToken, profile, done) => {
+      async (
+         _accessToken: string,
+         _refreshToken: string | undefined,
+         profile: Profile,
+         done: VerifyCallback
+      ) => {
          try {
             let user: IUser | null = await User.findOne({ googleId: profile.id });
             if (!user) {
@@ -40,22 +47,13 @@ passport.use(
 );
 
 // JWT strategy
-interface JwtPayload {
-   id: string;
-}
-
-// interface JwtStrategyOptions {
-//    jwtFromRequest: (req: any) => string | null;
-//    secretOrKeyProvider: string;
-// }
-
 passport.use(
    new JwtStrategy(
       {
          jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-         secretOrKey: process.env.JWT_SECRET!
+         secretOrKey: process.env.JWT_SECRET!,
       },
-      async (payload: JwtPayload, done: (error: any, user?: IUser | false) => void) => {
+      async (payload: IJwtPayload, done: (error: any, user?: IUser | false) => void) => {
          try {
             const user: IUser | null = await User.findById(payload.id);
             if (!user) return done(null, false);
@@ -65,4 +63,18 @@ passport.use(
          }
       }
    )
+);
+
+// Local Strategy
+passport.use(
+   new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
+      try {
+         const user: IUser | null = await User.findOne({ email, authProvider: "local" });
+         if (!user || !user.password || !(await bcrypt.compare(password, user.password))) {
+            return done(null, false, { message: "Invlaid Credentials" });
+         }
+      } catch (error: unknown) {
+         done(error);
+      }
+   })
 );
