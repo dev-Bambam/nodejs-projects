@@ -4,7 +4,7 @@ export interface IUser extends Document{
     email: string;
     googleId?: string;
     displayName?: string;
-    authProvider: "google";
+    authProvider: "google" | 'local';
     createdAt: Date;
 }
 
@@ -21,7 +21,7 @@ const userSchema = new Schema<IUser>({
     },
     authProvider: {
         type: String,
-        enum: ["google"],
+        enum: ["google", "local"],
         required: true
     },
     createdAt: {
