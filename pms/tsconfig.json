@@ -1,0 +1,14 @@
+{
+   "compilerOptions": {
+      "target": "ES2024",
+      "module": "CommonJS",
+      "strict": true,
+      "esModuleInterop": true,
+      "outDir": "./dist",
+      "rootDir": ".",
+      "baseUrl": ".",
+      "paths": {"*":["src/*"]}
+   },
+   "include": ["index.ts", "src/**/*"],
+   "exclude": ["node_modules"]
+}

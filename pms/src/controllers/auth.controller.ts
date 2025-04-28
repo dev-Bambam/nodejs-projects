@@ -1,4 +1,4 @@
-import * as service from "./../services/userService.js";
+import * as service from "../services/user.service.js";
 import { validateRegistration, validateLogin } from "../utils/validators/userValidator.js";
 
 export const userRegistration = async (req, res) => {
@@ -39,11 +39,11 @@ export const userLogin = async (req, res) => {
    try {
       let user;
 
-       if (userInput.includes("@")) {
-          const email = userInput
+      if (userInput.includes("@")) {
+         const email = userInput;
          user = await service.findUserByEmail(email);
-       } else {
-           const userName = userInput
+      } else {
+         const userName = userInput;
          user = await service.findUserByUsername(userName);
       }
       if (!user) {

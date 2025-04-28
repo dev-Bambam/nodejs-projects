@@ -1,5 +1,5 @@
 import express from "express";
-import userRoute from "./routes/userRoute.js";
+import userRoute from "./routes/auth.route";
 
 const app = express();
 app.use(express.json());
@@ -12,20 +12,13 @@ app.all("*", (req, res, next) => {
    //    });
 
    const err = new Error(`can't find ${req.originalUrl} on this server`);
-    err.status = "fail";
-    err.statusCode = 404
+   //  err.status = "fail";
+   //  err.statusCode = 404
 
-    next(err)
+   next(err);
 });
 
 // global error handling
-app.use((error, req, res, next) => {
-   error.statusCode = error.statusCode || 500;
-   error.status = error.status || "error";
-   res.status(error.statusCode).json({
-      status: error.statusCode,
-      message: error.message,
-   });
-});
+app.use();
 
 export default app;
