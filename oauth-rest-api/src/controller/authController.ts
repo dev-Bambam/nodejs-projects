@@ -37,5 +37,19 @@ export const googleCallback = (req: Request, res: Response): void => {
 }
 // sign up
 export const signup = async (req: Request<{}, {}, ISignupBody>, res: Response): Promise<void> => {
-    
+    const { email, password, displayName } = req.body;
+    if (!email || !password) {
+        res.status(400).json({
+            error: "email and password required"
+        })
+    }
+
+    try {
+        const existingUser: IUser | null = await User.findOne({ email });
+        if (existingUser) {
+            res.status(400).json({ error: 'Email already exist' });
+        }
+    } catch (error) {
+        
+    }
 }
