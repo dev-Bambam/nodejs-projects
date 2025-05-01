@@ -177,7 +177,6 @@ export const generateRefreshToken = async (req: Request, res: Response): Promise
    if (user) {
       await checkForRevokedToken(refreshToken);
       verifyActiveTokenMatch(user, refreshToken);
-      console.log(`I got here {2}`);
 
       const newAccessToken = getAccessToken(user._id, type);
       const newRefreshToken = getRefreshToken(user._id, type);

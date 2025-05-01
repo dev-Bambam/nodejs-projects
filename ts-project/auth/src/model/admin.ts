@@ -1,6 +1,6 @@
 import { Schema, model, Document } from "mongoose";
 
-export interface AdminDocument extends Document {
+export interface IAdminDocument extends Document {
    firstName: string;
    lastName: string;
    email: string;
@@ -11,7 +11,7 @@ export interface AdminDocument extends Document {
    refreshToken: string | undefined;
 }
 
-const adminSchema = new Schema<AdminDocument>(
+const adminSchema = new Schema<IAdminDocument>(
    {
       firstName: {
          type: String,
@@ -56,6 +56,6 @@ const adminSchema = new Schema<AdminDocument>(
    { timestamps: true }
 );
 
-const Admin = model<AdminDocument>("Admin", adminSchema);
+const Admin = model<IAdminDocument>("Admin", adminSchema);
 
 export default Admin;

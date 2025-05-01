@@ -1,19 +1,20 @@
 import { Schema, model, Document, ObjectId } from "mongoose";
 
-// create interface 
-export interface UserDocument extends Document{
-   _id: ObjectId,
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string,
-    code: string | undefined,
-    codeValidation: number | undefined,
-    verified: boolean,
-    refreshToken: string | undefined
+// create interface
+export interface IUserDocument extends Document {
+   _id: ObjectId;
+   firstName: string;
+   lastName: string;
+   email: string;
+   password: string;
+   type: string;
+   code: string | undefined;
+   codeValidation: number | undefined;
+   verified: boolean;
+   refreshToken: string | undefined;
 }
 
-const userSchema = new Schema<UserDocument>(
+const userSchema = new Schema<IUserDocument>(
    {
       firstName: {
          type: String,
@@ -37,6 +38,10 @@ const userSchema = new Schema<UserDocument>(
          select: false,
          trim: true,
       },
+      type: {
+         type: String,
+         select: false
+      },
       code: {
          type: String, // Code for both email verification and password reset
          select: false,
@@ -58,6 +63,6 @@ const userSchema = new Schema<UserDocument>(
    { timestamps: true }
 );
 
-const User = model<UserDocument>("User", userSchema);
+const User = model<IUserDocument>("User", userSchema);
 
 export default User;

@@ -4,10 +4,10 @@ import logger from "../utils/logger";
 
 const globalErrorHandler = (err: BaseError, req: Request, res: Response, next: NextFunction) => {
     // initialize all BaseError Properties
-   const statusCode = err.statusCode || 500;
-   const status = err.status || "fail";
-   const type = err.type || "UNKOWN_ERR";
-   const message = err.message || "Something is wrong";
+   const statusCode = err.statusCode ?? 500;
+   const status = err.status ?? "fail";
+   const type = err.type ?? "UNKOWN_ERR";
+   const message = err.message ?? "Something is wrong";
    let errorDetails = {};
 
     // check for specific error like ValidationError to populate error details fields
