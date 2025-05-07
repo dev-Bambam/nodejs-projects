@@ -1,24 +1,11 @@
-interface Shape{
-    area():number
+class MySQLUserRepo {
+   save(user: User) {}
 }
-
-class Rectangle implements Shape{
-    constructor(
-        public width: number,
-        public height:number
-    ) { }
+class User {}
+class UserService {
+   private userRepo = new MySQLUserRepo(); //hardcoded dependency
     
-    area(): number {
-        return this.height * this.width
-    }
-}
-class Square implements Shape{
-    constructor(public size: number) { }
-    area(): number {
-        return this.size * this.size
-    }
-}
-
-function testShape(shape: Shape) {
-    // console.assert(shape.area() >0)
+   saveUser(user: User) {
+      this.userRepo.save(user); //tightly coupled to MySQL
+   }
 }
