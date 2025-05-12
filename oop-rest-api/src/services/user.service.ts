@@ -19,5 +19,15 @@ class UserService{
     async update(id: string, data:iUser): Promise<iUser | null>{
         return this.repo.update(id, data)
     }
-    async 
+    async delete(id: string): Promise<iUser | null>{
+        return this.repo.delete(id)
+    }
+    async findByEmail(email: string): Promise<iUser | null>{
+        return this.repo.findByEmail(email)
+    }
+    async findByName(name: string): Promise<iUser | null>{
+        return this.repo.findByName(name)
+    }
 }
+
+export default UserService
