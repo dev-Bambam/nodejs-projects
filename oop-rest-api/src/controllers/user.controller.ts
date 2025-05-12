@@ -6,7 +6,7 @@ class UserController{
     private readonly service: UserService
     
     constructor() {
-        this.service = new UserService;
+        this.service = new UserService();
     }
     async create(req: Request, res: Response) {
         try {

@@ -1,0 +1,21 @@
+import { Router } from "express";
+import UserController from "../controllers/user.controller";
+
+class UserRoute {
+   private readonly controller: UserController;
+   public readonly router: Router;
+
+   constructor() {
+      this.controller = new UserController();
+      this.router = Router();
+      this.initRoutes();
+   }
+   private initRoutes() {
+      this.router
+         .route("/")
+         .post(this.controller.create.bind(this.controller))
+         .get(this.controller.findAll.bind(this.controller));
+   }
+}
+
+export default new UserRoute().router
