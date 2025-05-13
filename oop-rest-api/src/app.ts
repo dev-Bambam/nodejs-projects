@@ -17,7 +17,7 @@ class App{
     }
     private init() {
         this.initConfig()
-        this.initMiddlewares()
+        this.initMiddleWares()
         this.initRoutes()
         this.initErrorHandling()
     }
@@ -34,5 +34,15 @@ class App{
     private initRoutes(){
         this.app.use('api/v1/users', userRoute)
     }
-    
+    private initErrorHandling() {
+        this.app.use(ErrorHandler.NotFound);
+        this.app.use(ErrorHandler.serverError);
+    }
+    public listen() {
+        this.app.listen(this.port, () => {
+            console.log(`Server running at localhost:${this.port}`)
+        })
+    }
 }
+
+export default App
