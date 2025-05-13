@@ -12,7 +12,7 @@ class Database {
          await mongoose.connect(this.URI);
          console.log("DB connected");
       } catch (error) {
-         console.error("Db connection fail");
+         console.error(`Db connection fail:${(error as Error).message}`);
       }
    }
 }

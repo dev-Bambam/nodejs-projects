@@ -1,4 +1,3 @@
-import dotenv from 'dotenv'
 import express, { Application } from 'express'
 import cors from "cors"
 import helmet from 'helmet'
@@ -29,7 +28,6 @@ class App{
         this.app.use(cors())
         this.app.use(express.json())
         this.app.use(express.urlencoded({extended:true}))
-        dotenv.config()
     }
     private initRoutes(){
         this.app.use('api/v1/users', userRoute)

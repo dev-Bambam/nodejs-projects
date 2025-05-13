@@ -6,6 +6,7 @@ class UserRoute {
    public readonly router: Router;
 
    constructor() {
+      console.log("request got here")
       this.controller = new UserController();
       this.router = Router();
       this.initRoutes();
