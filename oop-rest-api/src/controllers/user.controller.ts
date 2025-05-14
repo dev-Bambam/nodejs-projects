@@ -9,6 +9,7 @@ class UserController{
         this.service = new UserService();
     }
     async create(req: Request, res: Response) {
+        console.log('request got here')
         try {
             const data: iUser = req.body;
             const user = await this.service.create(data)

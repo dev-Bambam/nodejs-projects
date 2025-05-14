@@ -30,10 +30,10 @@ class App {
       this.app.use(express.urlencoded({ extended: true }));
    }
    private initRoutes() {
-      this.app.use("api/v1/users", userRoute);
+      this.app.use("/api/v1/users", userRoute);
    }
    private initErrorHandling() {
-      this.app.use(ErrorHandler.NotFound);
+    //   this.app.use(ErrorHandler.NotFound);
       this.app.use(ErrorHandler.serverError);
    }
    public listen() {

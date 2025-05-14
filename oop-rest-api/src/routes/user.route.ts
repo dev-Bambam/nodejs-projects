@@ -6,12 +6,13 @@ class UserRoute {
    public readonly router: Router;
 
    constructor() {
-      console.log("request got here")
+      // console.log("request got here")
       this.controller = new UserController();
       this.router = Router();
       this.initRoutes();
    }
    private initRoutes() {
+      console.log('req got here')
       this.router
          .route("/")
          .post(this.controller.create.bind(this.controller))
