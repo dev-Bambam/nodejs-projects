@@ -6,10 +6,10 @@ import Database from "./config/db.config";
 import userRoute from "./routes/user.route";
 
 class App {
-   private readonly app: Application;
-   private readonly port: number;
+   // private readonly app: Application;
+   // private readonly port: number;
 
-   constructor() {
+   constructor(private readonly app:Application, private readonly port:number) {
       this.app = express();
       this.port = parseInt(process.env.PORT || "3000");
       this.init();
